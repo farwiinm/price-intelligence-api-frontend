@@ -1,5 +1,4 @@
 const PHP_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8001';
-const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8001';
 
 async function fetchJSON(url, options = {}) {
     const response = await fetch(url, {
@@ -41,17 +40,13 @@ export async function updatePrice(id, newPrice) {
 
 
 export async function triggerPriceFetch() {
-    const response = await fetch(`${API_BASE}/api/analytics/fetch-now`, {
+    return fetchJSON(`${PHP_BASE}/api/analytics.php?action=fetch`, {
         method: 'POST',
     });
-    if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
-    return response.json();
 }
 
 export async function getAnomalies() {
-    const response = await fetch(`${API_BASE}/api/analytics/anomalies`);
-    if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
-    return response.json();
+    return fetchJSON(`${PHP_BASE}/api/analytics.php?type=anomalies`);
 }
 
 export async function getPriceHistory(id) {
