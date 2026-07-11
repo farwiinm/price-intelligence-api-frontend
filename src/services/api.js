@@ -1,4 +1,5 @@
 const PHP_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8001';
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8001';
 
 async function fetchJSON(url, options = {}) {
     const response = await fetch(url, {
