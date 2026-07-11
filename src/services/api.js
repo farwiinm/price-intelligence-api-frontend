@@ -38,16 +38,21 @@ export async function updatePrice(id, newPrice) {
     });
 }
 
+
 export async function triggerPriceFetch() {
-    return fetchJSON(`${PHP_BASE}/api/analytics.php?action=fetch`, {
+    const response = await fetch(`${API_BASE}/api/analytics/fetch-now`, {
         method: 'POST',
     });
+    if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+    return response.json();
+}
+
+export async function getAnomalies() {
+    const response = await fetch(`${API_BASE}/api/analytics/anomalies`);
+    if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+    return response.json();
 }
 
 export async function getPriceHistory(id) {
     return fetchJSON(`${PHP_BASE}/api/prices.php?id=${id}`);
-}
-
-export async function getAnomalies() {
-    return fetchJSON(`${PHP_BASE}/api/analytics.php?type=anomalies`);
 }
